@@ -37,4 +37,10 @@ public class TopicoController {
         return ResponseEntity.created(uri).body(topico);
     }
 
+    @Transactional
+    @GetMapping("/{id}")
+    public ResponseEntity detallar(@PathVariable Long id) {
+        var topico = service.detallar(id);
+        return ResponseEntity.ok(topico);
+    }
 }

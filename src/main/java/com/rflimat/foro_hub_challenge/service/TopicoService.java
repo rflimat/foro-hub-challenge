@@ -48,4 +48,9 @@ public class TopicoService {
         var page = topicoRepository.findAll(paginacion).map(DatosListaTopico::new);
         return page;
     }
+
+    public DatosDetalleTopico detallar(@PathVariable Long id) {
+        var medico = topicoRepository.getReferenceById(id);
+        return new DatosDetalleTopico(medico);
+    }
 }
