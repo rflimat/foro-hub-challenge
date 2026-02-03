@@ -1,5 +1,6 @@
 package com.rflimat.foro_hub_challenge.controller;
 
+import com.rflimat.foro_hub_challenge.dto.topico.DatosActualizacionTopico;
 import com.rflimat.foro_hub_challenge.dto.topico.DatosListaTopico;
 import com.rflimat.foro_hub_challenge.dto.topico.DatosRegistroTopico;
 import com.rflimat.foro_hub_challenge.service.TopicoService;
@@ -41,6 +42,13 @@ public class TopicoController {
     @GetMapping("/{id}")
     public ResponseEntity detallar(@PathVariable Long id) {
         var topico = service.detallar(id);
+        return ResponseEntity.ok(topico);
+    }
+
+    @Transactional
+    @PutMapping("/{id}")
+    public ResponseEntity actualizar(@PathVariable Long id, @RequestBody @Valid DatosActualizacionTopico datos) {
+        var topico = service.actualizar(id, datos);
         return ResponseEntity.ok(topico);
     }
 }

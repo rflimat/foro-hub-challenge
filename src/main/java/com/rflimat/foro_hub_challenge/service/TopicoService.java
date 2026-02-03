@@ -1,6 +1,7 @@
 package com.rflimat.foro_hub_challenge.service;
 
 import com.rflimat.foro_hub_challenge.common.exception.ValidacionException;
+import com.rflimat.foro_hub_challenge.dto.topico.DatosActualizacionTopico;
 import com.rflimat.foro_hub_challenge.dto.topico.DatosDetalleTopico;
 import com.rflimat.foro_hub_challenge.dto.topico.DatosListaTopico;
 import com.rflimat.foro_hub_challenge.dto.topico.DatosRegistroTopico;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class TopicoService {
@@ -49,8 +49,23 @@ public class TopicoService {
         return page;
     }
 
-    public DatosDetalleTopico detallar(@PathVariable Long id) {
-        var medico = topicoRepository.getReferenceById(id);
-        return new DatosDetalleTopico(medico);
+    public DatosDetalleTopico detallar(Long id) {
+        var topico = topicoRepository.getReferenceById(id);
+        return new DatosDetalleTopico(topico);
+    }
+
+    public DatosDetalleTopico actualizar(Long id, DatosActualizacionTopico datos) {
+        if(id != null && !topicoRepository.existsById(id)){
+            throw new ValidacionException("No existe un topico con el id informado");
+        }
+
+        if (topicoRepository.existsByTituloAndMensajeAndIdNot(datos.titulo(), datos.mensaje(), id)) {
+            throw new ValidacionException("Ya existe un tópico con el mismo título y/o mensaje");
+        }
+
+        var topico = topicoRepository.getReferenceById(id);
+        topico.actualizarInformacion(datos);
+
+        return new DatosDetalleTopico(topico);
     }
 }

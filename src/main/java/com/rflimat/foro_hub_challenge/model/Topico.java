@@ -1,8 +1,10 @@
 package com.rflimat.foro_hub_challenge.model;
 
+import com.rflimat.foro_hub_challenge.dto.topico.DatosActualizacionTopico;
 import com.rflimat.foro_hub_challenge.dto.topico.DatosRegistroTopico;
 import com.rflimat.foro_hub_challenge.dto.topico.Status;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -48,5 +50,14 @@ public class Topico {
         this.mensaje = datosRegistroTopico.mensaje();
         this.fechaCreacion = LocalDateTime.now();
         this.status = Status.ABIERTO;
+    }
+
+    public void actualizarInformacion(@Valid DatosActualizacionTopico datos) {
+        if (datos.titulo() != null) {
+            this.titulo = datos.titulo();
+        }
+        if (datos.mensaje() != null) {
+            this.mensaje = datos.mensaje();
+        }
     }
 }
