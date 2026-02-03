@@ -68,4 +68,12 @@ public class TopicoService {
 
         return new DatosDetalleTopico(topico);
     }
+
+    public void eliminar(Long id) {
+        if(id != null && !topicoRepository.existsById(id)){
+            throw new ValidacionException("No existe un topico con el id informado");
+        }
+
+        topicoRepository.deleteById(id);
+    }
 }
