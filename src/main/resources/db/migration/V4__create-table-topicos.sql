@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS `topicos` (
   `titulo` VARCHAR(255) NOT NULL,
   `mensaje` TEXT NOT NULL,
   `fechaCreacion` DATETIME NOT NULL,
-  `status` TINYINT NOT NULL,
+  `status` VARCHAR(45) NOT NULL,
   `autor_id` BIGINT NOT NULL,
   `curso_id` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
