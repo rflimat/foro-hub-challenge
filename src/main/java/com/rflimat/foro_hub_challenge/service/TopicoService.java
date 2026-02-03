@@ -2,13 +2,17 @@ package com.rflimat.foro_hub_challenge.service;
 
 import com.rflimat.foro_hub_challenge.common.exception.ValidacionException;
 import com.rflimat.foro_hub_challenge.dto.topico.DatosDetalleTopico;
+import com.rflimat.foro_hub_challenge.dto.topico.DatosListaTopico;
 import com.rflimat.foro_hub_challenge.dto.topico.DatosRegistroTopico;
 import com.rflimat.foro_hub_challenge.model.Topico;
 import com.rflimat.foro_hub_challenge.repository.CursoRepository;
 import com.rflimat.foro_hub_challenge.repository.TopicoRepository;
 import com.rflimat.foro_hub_challenge.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @Service
 public class TopicoService {
@@ -38,5 +42,10 @@ public class TopicoService {
         topicoRepository.save(topico);
 
         return new DatosDetalleTopico(topico);
+    }
+
+    public Page<DatosListaTopico> listar(Pageable paginacion) {
+        var page = topicoRepository.findAll(paginacion).map(DatosListaTopico::new);
+        return page;
     }
 }
