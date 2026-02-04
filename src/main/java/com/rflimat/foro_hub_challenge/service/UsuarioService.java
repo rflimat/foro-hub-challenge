@@ -35,6 +35,10 @@ public class UsuarioService {
     }
 
     public DatosDetalleUsuario registrar(DatosRegistroUsuario datos) {
+        if(usuarioRepository.existsByCorreoElectronico(datos.correoElectronico())){
+            throw new ValidacionException("Ya existe un usuario con el correo electronico ingresado");
+        }
+
         Set<Perfil> perfiles = verificarPerfiles(datos.perfiles());
         String contrasenaCifrada = passwordEncoder.encode(datos.contrasena());
         var usuario = new Usuario(null, datos, contrasenaCifrada, perfiles);
@@ -56,6 +60,10 @@ public class UsuarioService {
     public DatosDetalleUsuario actualizar(Long id, DatosActualizacionUsuario datos) {
         if(id != null && !usuarioRepository.existsById(id)){
             throw new ValidacionException("No existe un usuario con el id informado");
+        }
+
+        if(usuarioRepository.existsByCorreoElectronicoAndIdNot(datos.correoElectronico(), id)){
+            throw new ValidacionException("Ya existe un usuario con el correo electronico ingresado");
         }
 
         Set<Perfil> perfiles = verificarPerfiles(datos.perfiles());

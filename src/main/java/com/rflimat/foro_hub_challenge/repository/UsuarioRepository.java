@@ -1,9 +1,12 @@
 package com.rflimat.foro_hub_challenge.repository;
 
 import com.rflimat.foro_hub_challenge.model.Usuario;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>  {
     UserDetails findByCorreoElectronico(String correoElectronico);
+    boolean existsByCorreoElectronico(String correoElectronico);
+    boolean existsByCorreoElectronicoAndIdNot(String correoElectronico, Long id);
 }
