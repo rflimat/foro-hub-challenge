@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS `perfiles` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(45) NULL,
+  `nombre` VARCHAR(45) NULL UNIQUE,
   PRIMARY KEY (`id`)
 );

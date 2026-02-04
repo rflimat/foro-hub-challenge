@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `topicos` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
-  `titulo` VARCHAR(255) NOT NULL,
-  `mensaje` TEXT NOT NULL,
+  `titulo` VARCHAR(255) NOT NULL UNIQUE,
+  `mensaje` TEXT NOT NULL UNIQUE,
   `fecha_creacion` DATETIME NOT NULL,
   `status` VARCHAR(45) NOT NULL,
   `autor_id` BIGINT NOT NULL,
