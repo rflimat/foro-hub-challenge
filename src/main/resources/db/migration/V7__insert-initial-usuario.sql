@@ -1,0 +1,2 @@
+INSERT INTO `usuarios` (`nombre`, `correo_electronico`, `contrasena`) VALUES ('User', 'user@mail.com', '$2a$10$QbyyXE3lj6KmZteSen.8/uFRdH2bzh8jFJaUJVVE.zUy/OtFF5PJ.');
+INSERT INTO `usuarios_perfiles` (`usuario_id`, `perfil_id`) VALUES (LAST_INSERT_ID(), 1), (LAST_INSERT_ID(), 2);
