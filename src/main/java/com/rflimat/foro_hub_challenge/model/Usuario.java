@@ -1,6 +1,5 @@
 package com.rflimat.foro_hub_challenge.model;
 
-import com.rflimat.foro_hub_challenge.dto.topico.DatosActualizacionTopico;
 import com.rflimat.foro_hub_challenge.dto.usuario.DatosActualizacionUsuario;
 import com.rflimat.foro_hub_challenge.dto.usuario.DatosRegistroUsuario;
 import jakarta.persistence.*;
