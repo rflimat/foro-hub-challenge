@@ -4,11 +4,14 @@ import com.rflimat.foro_hub_challenge.dto.curso.DatosActualizacionCurso;
 import com.rflimat.foro_hub_challenge.dto.curso.DatosListaCurso;
 import com.rflimat.foro_hub_challenge.dto.curso.DatosRegistroCurso;
 import com.rflimat.foro_hub_challenge.service.CursoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.JpaSort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,14 +20,21 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @RequestMapping("/cursos")
+@SecurityRequirement(name = "bearer-key")
 public class CursoController {
     @Autowired
     private CursoService service;
 
     @Transactional
     @GetMapping
-    public ResponseEntity<Page<DatosListaCurso>> listar(@PageableDefault(size=10, sort={"nombre"}, direction = Sort.Direction.ASC) Pageable paginacion) {
-        var page = service.listar(paginacion);
+    public ResponseEntity<Page<DatosListaCurso>> listar(@PageableDefault(size=10) Pageable paginacion) {
+        Pageable paginationx = PageRequest.of(
+                paginacion.getPageNumber(),
+                paginacion.getPageSize(),
+                JpaSort.unsafe(Sort.Direction.DESC, "nombre")
+        );
+
+        var page = service.listar(paginationx);
         return ResponseEntity.ok(page);
     }
 
